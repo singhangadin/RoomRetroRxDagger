@@ -1,8 +1,8 @@
 package com.github.angads25.roomretrorxdagger.dagger.modules
 
-import com.github.angads25.roomretrorxdagger.BuildConfig
 import com.github.angads25.roomretrorxdagger.dagger.scope.ApplicationScope
 import com.github.angads25.roomretrorxdagger.retrofit.repository.PropertyApiRepository
+import com.github.angads25.roomretrorxdagger.utils.Constants
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
@@ -28,7 +28,7 @@ class NetworkModule(private val cacheFile: File) {
     fun provideRetrofit(okHttpClient: OkHttpClient) : Retrofit {
         return Retrofit.Builder()
                 .client(okHttpClient)
-                .baseUrl(BuildConfig.BASE_URL)
+                .baseUrl(Constants.BASE_URL)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(
                         GsonConverterFactory.create(

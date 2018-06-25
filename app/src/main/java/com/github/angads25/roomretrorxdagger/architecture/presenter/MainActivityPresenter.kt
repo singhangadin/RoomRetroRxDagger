@@ -34,6 +34,7 @@ class MainActivityPresenter
                             it.propertyListing
                         }
                         .onErrorReturn {
+                            it.printStackTrace()
                             mainActivityView.hideProgress()
                             Collections.emptyList()
                         }
