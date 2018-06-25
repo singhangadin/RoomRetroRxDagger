@@ -1,9 +1,9 @@
 package com.github.angads25.roomretrorxdagger
 
-import android.app.ProgressDialog
 import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AppCompatActivity
+import android.view.View
 import com.github.angads25.roomretrorxdagger.adapters.PropertyListAdapter
 import com.github.angads25.roomretrorxdagger.architecture.contract.PropertyContract
 import com.github.angads25.roomretrorxdagger.architecture.presenter.MainActivityPresenter
@@ -16,7 +16,6 @@ import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), PropertyContract.PropertyView, SwipeRefreshLayout.OnRefreshListener {
 
-    private lateinit var progressDialog: ProgressDialog
     private lateinit var mainActivityComponent: MainActivityComponent
 
     private lateinit var propertyData: ArrayList<PropertyListing>
@@ -30,10 +29,6 @@ class MainActivity : AppCompatActivity(), PropertyContract.PropertyView, SwipeRe
         setContentView(R.layout.activity_main)
 
         propertyData = ArrayList()
-
-        progressDialog = ProgressDialog(this@MainActivity)
-        progressDialog.setCancelable(false)
-        progressDialog.setMessage("Loading...")
 
         val applicationComponent = PropertyApplication.get(this@MainActivity)
         mainActivityComponent = DaggerMainActivityComponent.builder()
@@ -53,12 +48,12 @@ class MainActivity : AppCompatActivity(), PropertyContract.PropertyView, SwipeRe
     }
 
     override fun showProgress() {
-        progressDialog.show()
+        layout_progress.visibility = View.VISIBLE
     }
 
     override fun hideProgress() {
-        if(progressDialog.isShowing) {
-            progressDialog.dismiss()
+        if(layout_progress.visibility == View.VISIBLE) {
+            layout_progress.visibility = View.GONE
         }
     }
 
