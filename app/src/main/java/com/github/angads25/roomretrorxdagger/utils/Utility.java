@@ -12,6 +12,6 @@ public class Utility {
         ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
-        return (isConnected ? Observable.just(true):Observable.<Boolean>error(new Throwable()));
+        return (isConnected ? Observable.just(true) : Observable.<Boolean>error(new Throwable()));
     }
 }

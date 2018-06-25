@@ -6,7 +6,7 @@ import com.github.angads25.roomretrorxdagger.dagger.qualifier.ApplicationContext
 import com.github.angads25.roomretrorxdagger.retrofit.repository.PropertyApiRepository
 import com.github.angads25.roomretrorxdagger.room.repository.PropertyDbRepository
 import com.github.angads25.roomretrorxdagger.utils.Utility
-import io.reactivex.Completable
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -27,8 +27,8 @@ class MainActivityPresenter
             .subscribe({
                 val retroDisposable = propertyApiRepository
                         .getPropertyList()
-                        .observeOn(AndroidSchedulers.mainThread())
                         .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
                         .map {
                             mainActivityView.hideProgress()
                             it.propertyListing
@@ -38,15 +38,18 @@ class MainActivityPresenter
                             mainActivityView.hideProgress()
                             Collections.emptyList()
                         }
-                        .subscribe({
-                            val dbDisposable = Completable.fromAction {
-                                propertyDbRepository.deleteAll()
-                                propertyDbRepository.insertAll(it)
-                            }
+                        .switchMap {
+                            return@switchMap Observable.just(it)
+                                    .map {
+                                        propertyDbRepository.deleteAll()
+                                        propertyDbRepository.insertAll(it)
+                                        it
+                                    }
                                     .subscribeOn(Schedulers.io())
-                                    .subscribe()
+                        }
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({
                             mainActivityView.showData(it)
-                            disposable.add(dbDisposable)
                         }, {
                             mainActivityView.hideProgress()
                             mainActivityView.onError(it)
