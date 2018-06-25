@@ -9,7 +9,7 @@ import com.github.angads25.roomretrorxdagger.dagger.modules.DatabaseModule
 import com.github.angads25.roomretrorxdagger.dagger.modules.NetworkModule
 import java.io.File
 
-class PropertyApplication : Application() {
+class DemoApplication : Application() {
     private lateinit var applicationComponent: ApplicationComponent
 
     override fun onCreate() {
@@ -18,17 +18,17 @@ class PropertyApplication : Application() {
         val cacheFile = File(cacheDir, "response_cache")
 
         applicationComponent = DaggerApplicationComponent.builder()
-                .appContextModule(AppContextModule(this@PropertyApplication))
+                .appContextModule(AppContextModule(this@DemoApplication))
                 .networkModule(NetworkModule(cacheFile))
                 .databaseModule(DatabaseModule())
                 .build()
 
-        applicationComponent.injectApplication(this@PropertyApplication)
+        applicationComponent.injectApplication(this@DemoApplication)
     }
 
     companion object {
         fun get(activity: Activity) : ApplicationComponent {
-            return (activity.application as PropertyApplication).applicationComponent
+            return (activity.application as DemoApplication).applicationComponent
         }
     }
 }

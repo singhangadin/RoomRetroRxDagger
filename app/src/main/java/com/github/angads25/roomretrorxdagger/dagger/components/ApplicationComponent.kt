@@ -2,7 +2,7 @@ package com.github.angads25.roomretrorxdagger.dagger.components
 
 import android.content.Context
 
-import com.github.angads25.roomretrorxdagger.PropertyApplication
+import com.github.angads25.roomretrorxdagger.DemoApplication
 
 import com.github.angads25.roomretrorxdagger.dagger.modules.AppContextModule
 import com.github.angads25.roomretrorxdagger.dagger.modules.DatabaseModule
@@ -24,5 +24,5 @@ interface ApplicationComponent {
     @ApplicationContext
     fun getAppContext() : Context
 
-    fun injectApplication(propertyApplication : PropertyApplication)
+    fun injectApplication(demoApplication : DemoApplication)
 }

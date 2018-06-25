@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity(), PropertyContract.PropertyView, SwipeRe
 
         propertyData = ArrayList()
 
-        val applicationComponent = PropertyApplication.get(this@MainActivity)
+        val applicationComponent = DemoApplication.get(this@MainActivity)
         mainActivityComponent = DaggerMainActivityComponent.builder()
                 .applicationComponent(applicationComponent)
                 .mainActivityModule(MainActivityModule(this@MainActivity))

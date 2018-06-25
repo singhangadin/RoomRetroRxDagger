@@ -27,10 +27,14 @@ class PropertyListAdapter (
     override fun onBindViewHolder(holder: PropertyViewHolder, position: Int) {
         holder.propertyName.text = propertyList[position].name
         holder.propertyLandmark.text = propertyList[position].landmark
+        holder.propertyPrice.text = "₹ ${propertyList[position].price}"
+        holder.propertyReviews.text = "${propertyList[position].reviewCount} Reviews"
     }
 
     class PropertyViewHolder(itemView : View): RecyclerView.ViewHolder(itemView) {
-        val propertyName : AppCompatTextView = itemView.property_name
-        val propertyLandmark : AppCompatTextView = itemView.property_landmark
+        val propertyName : AppCompatTextView = itemView.tv_name
+        val propertyPrice : AppCompatTextView = itemView.tv_price
+        val propertyReviews : AppCompatTextView = itemView.tv_reviews
+        val propertyLandmark : AppCompatTextView = itemView.tv_landmark
     }
 }
