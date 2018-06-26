@@ -14,15 +14,12 @@ class DemoApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-
         val cacheFile = File(cacheDir, "response_cache")
-
         applicationComponent = DaggerApplicationComponent.builder()
                 .appContextModule(AppContextModule(this@DemoApplication))
                 .networkModule(NetworkModule(cacheFile))
                 .databaseModule(DatabaseModule())
                 .build()
-
         applicationComponent.injectApplication(this@DemoApplication)
     }
 

@@ -33,17 +33,6 @@ class MainActivityPresenter
                             mainActivityView.hideProgress()
                             it.propertyListing
                         }
-                        .doOnError {
-                            it.printStackTrace()
-                            propertyDbRepository
-                                    .getProperties()
-                                    .subscribeOn(Schedulers.io())
-                                    .onErrorReturn {
-                                        it.printStackTrace()
-                                        Collections.emptyList()
-                                    }
-                                    .subscribe()
-                        }
                         .switchMap {
                             return@switchMap Observable.just(it)
                                     .map {
@@ -53,10 +42,21 @@ class MainActivityPresenter
                                     }
                                     .subscribeOn(Schedulers.io())
                         }
+                        .doOnError {
+                            it.printStackTrace()
+                            val dbDisposable = propertyDbRepository
+                                    .getProperties()
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .onErrorReturn {
+                                        it.printStackTrace()
+                                        Collections.emptyList()
+                                    }
+                                    .subscribe { mainActivityView.showData(it) }
+                            disposable.add(dbDisposable)
+                        }
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe({
-                            mainActivityView.showData(it)
-                        }, {
+                        .subscribe({ mainActivityView.showData(it) }, {
                             mainActivityView.hideProgress()
                             mainActivityView.onError(it)
                         })
@@ -68,20 +68,15 @@ class MainActivityPresenter
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeOn(Schedulers.io())
                         .onErrorReturn {
-                            mainActivityView.hideProgress()
                             mainActivityView.onError(it)
                             Collections.emptyList()
                         }
-                        .subscribe({
-                            mainActivityView.hideProgress()
-                            mainActivityView.showData(it)
-                        }, Throwable::printStackTrace)
+                        .doOnNext { mainActivityView.hideProgress() }
+                        .subscribe({ mainActivityView.showData(it) }, Throwable::printStackTrace)
                 disposable.add(dbDisposable)
         })
         disposable.add(networkDisposable)
     }
 
-    override fun dumpData() {
-        disposable.dispose()
-    }
+    override fun dumpData() { disposable.dispose() }
 }
