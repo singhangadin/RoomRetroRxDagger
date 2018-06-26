@@ -11,7 +11,5 @@ class MainActivityModule(private val mainView: PropertyContract.PropertyView) {
 
     @Provides
     @ActivityScope
-    fun provideView() : PropertyContract.PropertyView {
-        return mainView
-    }
+    fun provideView() : PropertyContract.PropertyView { return mainView }
 }

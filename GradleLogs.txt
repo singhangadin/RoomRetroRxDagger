@@ -13,33 +13,30 @@ If you are not using NDK, unset the NDK variable from ANDROID_NDK_HOME or local.
 :app:generateDebugResources UP-TO-DATE
 :app:mergeDebugResources UP-TO-DATE
 :app:createDebugCompatibleScreenManifests UP-TO-DATE
-:app:processDebugManifest
+:app:processDebugManifest UP-TO-DATE
 :app:splitsDiscoveryTaskDebug UP-TO-DATE
-:app:processDebugResources
+:app:processDebugResources UP-TO-DATE
 :app:kaptGenerateStubsDebugKotlin
-:app:kaptDebugKotlin
-w: Classpath entry points to a non-existent location: /Users/angad/Public/Assignment/app/src/debug/java
-w: Classpath entry points to a non-existent location: /Users/angad/Public/Assignment/app/src/debug/kotlin
-w: Classpath entry points to a non-existent location: /Users/angad/Public/Assignment/app/src/main/kotlin
+:app:kaptDebugKotlin UP-TO-DATE
 :app:compileDebugKotlin
 :app:prepareLintJar UP-TO-DATE
-:app:generateDebugSources
+:app:generateDebugSources UP-TO-DATE
 :app:javaPreCompileDebug
 :app:compileDebugJavaWithJavac
 :app:compileDebugNdk NO-SOURCE
 :app:compileDebugSources
-:app:mergeDebugShaders UP-TO-DATE
-:app:compileDebugShaders UP-TO-DATE
-:app:generateDebugAssets UP-TO-DATE
-:app:mergeDebugAssets UP-TO-DATE
+:app:mergeDebugShaders
+:app:compileDebugShaders
+:app:generateDebugAssets
+:app:mergeDebugAssets
 :app:transformClassesWithDexBuilderForDebug
 :app:transformDexArchiveWithExternalLibsDexMergerForDebug
 :app:transformDexArchiveWithDexMergerForDebug
-:app:mergeDebugJniLibFolders UP-TO-DATE
-:app:transformNativeLibsWithMergeJniLibsForDebug UP-TO-DATE
+:app:mergeDebugJniLibFolders
+:app:transformNativeLibsWithMergeJniLibsForDebug
 :app:processDebugJavaRes NO-SOURCE
-:app:transformResourcesWithMergeJavaResForDebug UP-TO-DATE
-:app:validateSigningDebug UP-TO-DATE
+:app:transformResourcesWithMergeJavaResForDebug
+:app:validateSigningDebug
 :app:packageDebug
 :app:assembleDebug
 :app:preReleaseBuild
@@ -61,11 +58,6 @@ w: Classpath entry points to a non-existent location: /Users/angad/Public/Assign
 w: Classpath entry points to a non-existent location: /Users/angad/Public/Assignment/app/src/main/kotlin
 w: Classpath entry points to a non-existent location: /Users/angad/Public/Assignment/app/src/release/java
 :app:compileReleaseKotlin
-w: /Users/angad/Public/Assignment/app/src/main/java/com/github/angads25/assignment/MainActivity.kt: (3, 20): 'ProgressDialog' is deprecated. Deprecated in Java
-w: /Users/angad/Public/Assignment/app/src/main/java/com/github/angads25/assignment/MainActivity.kt: (18, 42): 'ProgressDialog' is deprecated. Deprecated in Java
-w: /Users/angad/Public/Assignment/app/src/main/java/com/github/angads25/assignment/MainActivity.kt: (28, 26): 'ProgressDialog' is deprecated. Deprecated in Java
-w: /Users/angad/Public/Assignment/app/src/main/java/com/github/angads25/assignment/dagger/scope/ActivityScope.kt: (8, 1): This annotation is deprecated in Kotlin. Use '@kotlin.annotation.Retention' instead
-w: /Users/angad/Public/Assignment/app/src/main/java/com/github/angads25/assignment/dagger/scope/ApplicationScope.kt: (8, 1): This annotation is deprecated in Kotlin. Use '@kotlin.annotation.Retention' instead
 :app:generateReleaseSources
 :app:javaPreCompileRelease
 :app:compileReleaseJavaWithJavac
@@ -87,8 +79,8 @@ w: /Users/angad/Public/Assignment/app/src/main/java/com/github/angads25/assignme
 :app:assembleRelease
 :app:assemble
 :app:lint
-Ran lint on variant debug: 2 issues found
-Ran lint on variant release: 2 issues found
+Ran lint on variant debug: 5 issues found
+Ran lint on variant release: 5 issues found
 Wrote HTML report to file:///Users/angad/Public/Assignment/app/build/reports/lint-results.html
 Wrote XML report to file:///Users/angad/Public/Assignment/app/build/reports/lint-results.xml
 :app:kaptGenerateStubsDebugUnitTestKotlin
@@ -118,5 +110,5 @@ w: Classpath entry points to a non-existent location: /Users/angad/Public/Assign
 :app:check
 :app:build
 
-BUILD SUCCESSFUL in 1m 38s
-68 actionable tasks: 50 executed, 18 up-to-date
+BUILD SUCCESSFUL in 1m 2s
+68 actionable tasks: 54 executed, 14 up-to-date

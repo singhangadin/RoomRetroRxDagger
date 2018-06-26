@@ -1,6 +1,7 @@
 package com.github.angads25.roomretrorxdagger.architecture.presenter
 
 import android.content.Context
+import android.support.v4.widget.SwipeRefreshLayout
 import com.github.angads25.roomretrorxdagger.architecture.contract.PropertyContract
 import com.github.angads25.roomretrorxdagger.dagger.qualifier.ApplicationContext
 import com.github.angads25.roomretrorxdagger.retrofit.repository.PropertyApiRepository
@@ -18,7 +19,9 @@ class MainActivityPresenter
                     val propertyApiRepository: PropertyApiRepository,
                     val mainActivityView: PropertyContract.PropertyView,
                     val propertyDbRepository: PropertyDbRepository
-) : PropertyContract.PropertyPresenter {
+) : PropertyContract.PropertyPresenter, SwipeRefreshLayout.OnRefreshListener {
+    override fun onRefresh() { mainActivityView.onRefresh() }
+
     private val disposable = CompositeDisposable()
 
     override fun loadData() {

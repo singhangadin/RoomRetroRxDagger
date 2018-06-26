@@ -15,14 +15,13 @@ import com.github.angads25.roomretrorxdagger.room.repository.PropertyDbRepositor
 import dagger.Component
 
 @ApplicationScope
-@Component(modules = [(AppContextModule::class) ,(NetworkModule::class), (DatabaseModule::class)])
+@Component(modules = [(AppContextModule::class), (NetworkModule::class), (DatabaseModule::class)])
 interface ApplicationComponent {
     fun getPropertyRepository() : PropertyApiRepository
 
     fun getPropertyDbRepository() : PropertyDbRepository
 
-    @ApplicationContext
-    fun getAppContext() : Context
+    @ApplicationContext fun getContext() : Context
 
-    fun injectApplication(demoApplication : DemoApplication)
+    fun inject(demoApplication : DemoApplication)
 }

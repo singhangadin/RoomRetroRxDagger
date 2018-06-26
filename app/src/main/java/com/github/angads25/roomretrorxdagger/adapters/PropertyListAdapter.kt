@@ -7,13 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.github.angads25.roomretrorxdagger.R
+import com.github.angads25.roomretrorxdagger.dagger.qualifier.ActivityContext
 import com.github.angads25.roomretrorxdagger.retrofit.model.PropertyListing
 import kotlinx.android.synthetic.main.list_item_property.view.*
+import javax.inject.Inject
 
-class PropertyListAdapter (
-        private val context: Context,
-        private val propertyList: List<PropertyListing>
+class PropertyListAdapter @Inject constructor (
+        @ActivityContext private val context: Context
 ) : RecyclerView.Adapter<PropertyListAdapter.PropertyViewHolder>() {
+    private val propertyList: ArrayList<PropertyListing> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PropertyViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.list_item_property, parent, false)
@@ -29,6 +31,22 @@ class PropertyListAdapter (
         holder.propertyLandmark.text = propertyList[position].landmark
         holder.propertyPrice.text = "₹ ${propertyList[position].price}"
         holder.propertyReviews.text = "${propertyList[position].reviewCount} Reviews"
+    }
+
+    fun replace(propertyListing: List<PropertyListing>) {
+        clear()
+        add(propertyListing)
+    }
+
+    private fun clear() {
+        val size = itemCount
+        propertyList.clear()
+        notifyItemRangeRemoved(0, size)
+    }
+
+    private fun add (propertyListing: List<PropertyListing>) {
+        this.propertyList.addAll(propertyListing)
+        notifyItemRangeInserted(0, itemCount)
     }
 
     class PropertyViewHolder(itemView : View): RecyclerView.ViewHolder(itemView) {

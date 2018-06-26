@@ -13,6 +13,8 @@ interface PropertyContract {
         fun hideProgress()
 
         fun showData(propertyListing: List<PropertyListing>)
+
+        fun onRefresh()
     }
 
     interface PropertyPresenter {
