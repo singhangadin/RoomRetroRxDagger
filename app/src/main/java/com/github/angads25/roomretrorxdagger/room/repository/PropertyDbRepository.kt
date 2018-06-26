@@ -4,7 +4,7 @@ import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
-import com.github.angads25.roomretrorxdagger.retrofit.model.PropertyListing
+import com.github.angads25.roomretrorxdagger.architecture.model.PropertyListing
 import io.reactivex.Flowable
 
 @Dao

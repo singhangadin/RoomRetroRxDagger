@@ -1,4 +1,4 @@
-package com.github.angads25.roomretrorxdagger.retrofit.model;
+package com.github.angads25.roomretrorxdagger.architecture.model;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;

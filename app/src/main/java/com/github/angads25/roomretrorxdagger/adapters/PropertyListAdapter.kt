@@ -7,8 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.github.angads25.roomretrorxdagger.R
+import com.github.angads25.roomretrorxdagger.architecture.model.PropertyListing
 import com.github.angads25.roomretrorxdagger.dagger.qualifier.ActivityContext
-import com.github.angads25.roomretrorxdagger.retrofit.model.PropertyListing
 import kotlinx.android.synthetic.main.list_item_property.view.*
 import javax.inject.Inject
 
@@ -22,9 +22,7 @@ class PropertyListAdapter @Inject constructor (
         return PropertyViewHolder(view)
     }
 
-    override fun getItemCount(): Int {
-        return propertyList.size
-    }
+    override fun getItemCount(): Int { return propertyList.size }
 
     override fun onBindViewHolder(holder: PropertyViewHolder, position: Int) {
         holder.propertyName.text = propertyList[position].name
@@ -45,8 +43,9 @@ class PropertyListAdapter @Inject constructor (
     }
 
     private fun add (propertyListing: List<PropertyListing>) {
+        val listSize = this.propertyList.size
         this.propertyList.addAll(propertyListing)
-        notifyItemRangeInserted(0, itemCount)
+        notifyItemRangeInserted(listSize, itemCount)
     }
 
     class PropertyViewHolder(itemView : View): RecyclerView.ViewHolder(itemView) {

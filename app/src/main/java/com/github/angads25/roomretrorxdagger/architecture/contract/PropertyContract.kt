@@ -1,6 +1,6 @@
 package com.github.angads25.roomretrorxdagger.architecture.contract
 
-import com.github.angads25.roomretrorxdagger.retrofit.model.PropertyListing
+import com.github.angads25.roomretrorxdagger.architecture.model.PropertyListing
 
 interface PropertyContract {
 

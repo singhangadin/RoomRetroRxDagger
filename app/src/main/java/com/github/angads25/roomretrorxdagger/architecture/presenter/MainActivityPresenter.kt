@@ -1,17 +1,22 @@
 package com.github.angads25.roomretrorxdagger.architecture.presenter
 
 import android.content.Context
+
 import android.support.v4.widget.SwipeRefreshLayout
-import com.github.angads25.roomretrorxdagger.architecture.contract.PropertyContract
-import com.github.angads25.roomretrorxdagger.dagger.qualifier.ApplicationContext
-import com.github.angads25.roomretrorxdagger.retrofit.repository.PropertyApiRepository
-import com.github.angads25.roomretrorxdagger.room.repository.PropertyDbRepository
+
 import com.github.angads25.roomretrorxdagger.utils.Utility
+import com.github.angads25.roomretrorxdagger.dagger.qualifier.ApplicationContext
+import com.github.angads25.roomretrorxdagger.room.repository.PropertyDbRepository
+import com.github.angads25.roomretrorxdagger.architecture.contract.PropertyContract
+import com.github.angads25.roomretrorxdagger.retrofit.repository.PropertyApiRepository
+
 import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import java.util.*
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.android.schedulers.AndroidSchedulers
+
+import java.util.Collections
+
 import javax.inject.Inject
 
 class MainActivityPresenter
@@ -20,8 +25,6 @@ class MainActivityPresenter
                     val mainActivityView: PropertyContract.PropertyView,
                     val propertyDbRepository: PropertyDbRepository
 ) : PropertyContract.PropertyPresenter, SwipeRefreshLayout.OnRefreshListener {
-    override fun onRefresh() { mainActivityView.onRefresh() }
-
     private val disposable = CompositeDisposable()
 
     override fun loadData() {
@@ -66,20 +69,22 @@ class MainActivityPresenter
                 disposable.add(retroDisposable)
         }, {
             it.printStackTrace()
-                val dbDisposable = propertyDbRepository
-                        .getProperties()
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribeOn(Schedulers.io())
-                        .onErrorReturn {
-                            mainActivityView.onError(it)
-                            Collections.emptyList()
-                        }
-                        .doOnNext { mainActivityView.hideProgress() }
-                        .subscribe({ mainActivityView.showData(it) }, Throwable::printStackTrace)
-                disposable.add(dbDisposable)
+            val dbDisposable = propertyDbRepository
+                    .getProperties()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .onErrorReturn {
+                        mainActivityView.onError(it)
+                        Collections.emptyList()
+                    }
+                    .doOnNext { mainActivityView.hideProgress() }
+                    .subscribe({ mainActivityView.showData(it) }, { mainActivityView.onError(it) })
+            disposable.add(dbDisposable)
         })
         disposable.add(networkDisposable)
     }
+
+    override fun onRefresh() { mainActivityView.onRefresh() }
 
     override fun dumpData() { disposable.dispose() }
 }
